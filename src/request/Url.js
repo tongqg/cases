@@ -5,14 +5,14 @@ import Input from "@material-ui/core/Input";
 
 const mapStateToProps = store => {
   return {
-    url: "/" + store.url.path.join("/")
+    url: "/" + store.request.url.path.join("/")
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onChange: e => {
-      dispatch(update("$.url.path", e.target.value.split("/")));
+      dispatch(update("$.request.url.path", e.target.value.split("/")));
     }
   };
 };

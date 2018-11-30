@@ -5,7 +5,7 @@ import { update } from "./store";
 
 const mapStateToProps = store => {
   return {
-    value: store.url.protocol,
+    value: store.request.url.protocol,
     candidates: ["HTTP", "HTTPS"]
   };
 };
@@ -13,7 +13,7 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
   return {
     updateStore: value => {
-      dispatch(update("$.protocol", value));
+      dispatch(update("$.Protocolprotocol", value));
     }
   };
 };

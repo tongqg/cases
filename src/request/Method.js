@@ -1,11 +1,10 @@
 import { connect } from "react-redux";
-
 import Selector from "./Selector";
 import { update } from "./store";
 
 const mapStateToProps = store => {
   return {
-    value: store.method,
+    value: store.request.method,
     candidates: ["GET", "POST", "PUT", "DELETE"]
   };
 };
@@ -13,7 +12,7 @@ const mapStateToProps = store => {
 const mapDispatchToProps = dispatch => {
   return {
     updateStore: value => {
-      dispatch(update("$.method", value));
+      dispatch(update("$.request.method", value));
     }
   };
 };
