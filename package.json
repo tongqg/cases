@@ -13,6 +13,7 @@
     "react-dom": "latest",
     "react-redux": "5.1.1",
     "react-scripts": "latest",
+    "react-spinner-material": "1.0.17",
     "react-table": "latest",
     "redux": "4.0.1"
   },

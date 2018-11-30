@@ -37,7 +37,7 @@ class Selector extends React.Component {
       return;
     }
     this.setState({ open: false });
-    this.props.updateStore(event.currentTarget.textContent);
+    this.props.update(event.currentTarget.textContent);
   };
 
   handleCloseAway = event => {

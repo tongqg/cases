@@ -1,29 +1,17 @@
 import React from "react";
-import { connect } from "react-redux";
-import { update } from "./store";
 import Input from "@material-ui/core/Input";
+import JsonBinding from "../util/redux";
 
-const mapStateToProps = store => {
-  return {
-    hostname: store.request.url.host.join(".")
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onChange: e => {
-      dispatch(update("$.request.url.host", e.target.value.split(".")));
-    }
-  };
-};
-
-const HostnameInput = ({ hostname, onChange, ...props }) => (
-  <Input disabled defaultValue={hostname} onChange={onChange} {...props} />
+let binding = new JsonBinding("$.request.url.host");
+const HostnameInput = ({ value, update, ...props }) => (
+  <Input
+    disabled
+    defaultValue={value.join(".")}
+    onChange={e => update(e.target.value.split("."))}
+    {...props}
+  />
 );
 
-const Hostname = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HostnameInput);
+const Hostname = binding.connect(HostnameInput);
 
 export default Hostname;

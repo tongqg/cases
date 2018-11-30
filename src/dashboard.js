@@ -15,8 +15,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
-import SimpleTable from "./SimpleTable";
-import Case from "./Case";
+import Service from "./Service";
 
 const drawerWidth = 240;
 
@@ -177,10 +176,10 @@ class Dashboard extends React.Component {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Typography variant="h4" gutterBottom component="h2">
-            This is a test case!
+            This is a web service test
           </Typography>
           <Typography component="div" className={classes.chartContainer}>
-            <Case />
+            <Service />
           </Typography>
         </main>
       </div>

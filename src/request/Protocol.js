@@ -1,26 +1,8 @@
-import { connect } from "react-redux";
-
 import Selector from "./Selector";
-import { update } from "./store";
+import JsonBinding from "../util/redux";
 
-const mapStateToProps = store => {
-  return {
-    value: store.request.url.protocol,
-    candidates: ["HTTP", "HTTPS"]
-  };
-};
+let binding = new JsonBinding("$.request.url.protocol");
 
-const mapDispatchToProps = dispatch => {
-  return {
-    updateStore: value => {
-      dispatch(update("$.Protocolprotocol", value));
-    }
-  };
-};
-
-const Protocol = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Selector);
+const Protocol = binding.connect(Selector);
 
 export default Protocol;

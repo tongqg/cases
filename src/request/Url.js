@@ -1,29 +1,21 @@
 import React from "react";
-import { connect } from "react-redux";
-import { update } from "./store";
+import JsonBinding from "../util/redux";
 import Input from "@material-ui/core/Input";
 
-const mapStateToProps = store => {
-  return {
-    url: "/" + store.request.url.path.join("/")
-  };
+let binding = new JsonBinding("$.request.url.path");
+
+const UrlInput = ({ value, update, ...props }) => {
+  let onChange = e => update(e.target.value.split("/").slice(1));
+  return (
+    <Input
+      fullWidth
+      defaultValue={"/" + value.join("/")}
+      onChange={onChange}
+      {...props}
+    />
+  );
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onChange: e => {
-      dispatch(update("$.request.url.path", e.target.value.split("/")));
-    }
-  };
-};
-
-const UrlInput = ({ url, onChange, ...props }) => (
-  <Input fullWidth defaultValue={url} onChange={onChange} {...props} />
-);
-
-const Url = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UrlInput);
+const Url = binding.connect(UrlInput);
 
 export default Url;
