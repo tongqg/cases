@@ -9,7 +9,8 @@ import Hostname from "./Hostname";
 import Url from "./Url";
 import Method from "./Method";
 import Protocol from "./Protocol";
-import { jsonUpdateAction } from "../util/redux";
+import { newExecution, setExecution } from "./data";
+import JsonBinding from "../util/redux";
 
 const styles = theme => ({
   root: {
@@ -32,15 +33,6 @@ const styles = theme => ({
 const gateway_server = "https://virtserver.swaggerhub.com/tongqg/cases/1.0.1";
 const gateway_url = "/gateway";
 
-const mapStateToProps = store => ({
-  response: store.response,
-  request: store.request
-});
-
-const mapDispatchToProps = dispatch => ({
-  update: value => dispatch(jsonUpdateAction("$.response", value))
-});
-
 class RequestForm extends React.Component {
   constructor(props) {
     super(props);
@@ -48,16 +40,19 @@ class RequestForm extends React.Component {
   }
 
   getResponse = callback => {
-    let update = this.props.update;
+    let props = this.props;
+    let e = newExecution(props.value);
+    props.insert(e, "$.executions");
     fetch(gateway_server + gateway_url, {
       method: "post",
-      body: JSON.stringify(this.props.request)
+      body: JSON.stringify(props.value.request)
     })
       .then(function(response) {
         return response.json();
       })
       .then(function(data) {
-        update(data);
+        setExecution(e, data);
+        props.updateArray(e, "$.executions");
         callback();
       });
   };
@@ -72,36 +67,29 @@ class RequestForm extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div style={{ width: "100%" }}>
+      <div className={classes.root}>
         <div className={classes.root}>
-          <div className={classes.root}>
-            <Method candidates={["GET", "POST", "PUT", "DELETE"]} />
-            <Protocol candidates={["HTTP", "HTTPS"]} />
-            <Hostname className={classes.input} />
-            <Url className={classes.input} />
-          </div>
-          <div className={classes.play}>
-            <Button color="primary" onClick={this.click}>
-              {this.state.running ? (
-                <Spinner size={20} spinnerColor={"#333"} spinnerWidth={2} />
-              ) : (
-                <Icon>play_arrow</Icon>
-              )}
-            </Button>
-          </div>
+          <Method candidates={["GET", "POST", "PUT", "DELETE"]} />
+          <Protocol candidates={["HTTP", "HTTPS"]} />
+          <Hostname className={classes.input} />
+          <Url className={classes.input} />
         </div>
-
-        <Typography component="div" style={{ color: "grey", fontSize: "10px" }}>
-          {JSON.stringify(this.props.response)}
-        </Typography>
+        <div className={classes.play}>
+          <Button color="primary" onClick={this.click}>
+            {this.state.running ? (
+              <Spinner size={20} spinnerColor={"#333"} spinnerWidth={2} />
+            ) : (
+              <Icon>play_arrow</Icon>
+            )}
+          </Button>
+        </div>
       </div>
     );
   }
 }
 
+const binding = new JsonBinding("$");
+
 const Request = withStyles(styles)(RequestForm);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Request);
+export default binding.connect(Request);

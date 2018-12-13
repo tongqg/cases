@@ -34,7 +34,7 @@ class Service extends React.Component {
         {cases.item.map((item, i) => {
           let store = createStore(reducer(item));
           return (
-            <Provider store={store}>
+            <Provider store={store} key={i}>
               <TestCase />
             </Provider>
           );

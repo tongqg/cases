@@ -9,11 +9,9 @@ import Divider from "@material-ui/core/Divider";
 import Chip from "@material-ui/core/Chip";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import RequestForm from "./RequestForm";
-import Execution from "./Execution";
+import Executions from "./Executions";
 import { withStyles } from "@material-ui/core/styles";
-import { connect, Provider } from "react-redux";
-import { createStore } from "redux";
-import { reducer } from "../util/redux";
+import { connect } from "react-redux";
 
 const styles = theme => ({
   root: {
@@ -61,7 +59,7 @@ class TestCaseSection extends React.Component {
       <ExpansionPanel
         key={classes.id}
         className={classes.section}
-        defaultExpanded="true"
+        defaultExpanded={true}
       >
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Typography className={classes.heading}>
@@ -72,7 +70,7 @@ class TestCaseSection extends React.Component {
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <div>
+          <div style={{ width: "100%" }}>
             <RequestForm />
             <div style={{ display: "flex", alignItems: "center" }}>
               <div className={classes.column}>
@@ -87,14 +85,7 @@ class TestCaseSection extends React.Component {
                 <Typography variant="caption">
                   Result
                   <br />
-                  {this.props.executions.map((item, i) => {
-                    let store = createStore(reducer(item));
-                    return (
-                      <Provider store={store}>
-                        <Execution />
-                      </Provider>
-                    );
-                  })}
+                  <Executions />
                 </Typography>
               </div>
             </div>

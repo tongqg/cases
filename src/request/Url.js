@@ -4,17 +4,18 @@ import Input from "@material-ui/core/Input";
 
 let binding = new JsonBinding("$.request.url.path");
 
-const UrlInput = ({ value, update, ...props }) => {
-  let onChange = e => update(e.target.value.split("/").slice(1));
-  return (
-    <Input
-      fullWidth
-      defaultValue={"/" + value.join("/")}
-      onChange={onChange}
-      {...props}
-    />
-  );
-};
+class UrlInput extends React.Component {
+  render() {
+    let onChange = e => this.props.update(e.target.value.split("/").slice(1));
+    return (
+      <Input
+        fullWidth
+        defaultValue={"/" + this.props.value.join("/")}
+        onChange={onChange}
+      />
+    );
+  }
+}
 
 const Url = binding.connect(UrlInput);
 
