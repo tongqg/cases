@@ -114,7 +114,4 @@ ExecutionSection.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-// let binding = new JsonBinding("$");
-// const Execution = binding.connect(withStyles(styles)(ExecutionSection));
-
 export default withStyles(styles)(ExecutionSection);
